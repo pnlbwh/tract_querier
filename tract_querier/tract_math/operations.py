@@ -1,7 +1,5 @@
 from .decorator import tract_math_operation, set_dictionary_from_use_filenames_as_index
 
-from six.moves import range
-
 from warnings import warn
 
 import numpy
@@ -18,11 +16,7 @@ import traceback
 from . import tensor_operations
 from . import tract_operations
 
-
-try:
-    from collections import OrderedDict
-except ImportError:  # Python 2.6 fix
-    from ordereddict import OrderedDict
+from collections import OrderedDict
 
 
 @tract_math_operation(': print the names of scalar data associated with each tract')
@@ -842,7 +836,7 @@ def tract_flip_endpoints_in_label(
 
     tracts = list(tractography.tracts())
     tracts_data = tractography.tracts_data()
-    print("Flipped %d tracts" % len(needs_flip))
+    print(f"Flipped {len(needs_flip)} tracts")
     for i in needs_flip:
         tracts[i] = tracts[i][::-1]
         for data_key, data_points in tracts_data:

@@ -344,7 +344,7 @@ class Box3DRich(Box2D):
 
             points = points[z < cutoff]
             point_ids = point_ids[z < cutoff]
-            print(('Discarded', (len(original_points) - len(points)) * 1. / len(points)))
+            print(f'Discarded {(len(original_points) - len(points)) * 1. / len(points)}')
             vectors = vectors[z < cutoff]
             if labels is not None:
                 labels = labels[z < cutoff]
@@ -869,7 +869,7 @@ def all_obb_3d_nr(points_, vectors_, labels_, tol=1e-8, level_=0, intersection_t
                     setattr(box, side, new_box)
                     getattr(box, side).parent = box
 
-                    print(("\tAdded to stack ", side))
+                    print(f"\tAdded to stack {side}")
                     stack.append(new_box)
                 else:
                     points_done += len(new_points)
@@ -1007,13 +1007,14 @@ def draw_box_2d(obbs, **args):
 
 
 def draw_box_3d(obbs, tube_radius=1, color=None, **kwargs):
+        import numpy as np
         from mayavi.mlab import plot3d
-        from numpy.random import rand
+        rng = np.random.default_rng(1234)
         if isinstance(obbs, Box2D):
             obbs = [obbs]
         for obb in obbs:
             if color is None:
-                color_ = tuple(rand(3))
+                color_ = tuple(rng.random(3))
             else:
                 color_ = color
             box = obb.box
